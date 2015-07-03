@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/taskName"
+        android:paddingTop="20dp"
+        android:textSize="30sp"
+        android:layout_width="1000dp"
+        android:layout_height="85dp"
+        android:background="@color/Background_Color"
+        android:textColor="@color/Text_Color"
+        android:layout_alignParentLeft="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:paddingLeft="3dp"/>
+
+    <TextView
+        android:id="@+id/taskNotes"
+        android:textSize="12sp"
+        android:layout_width="1000dp"
+        android:layout_height="25dp"
+        android:background="@color/Background_Color"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="3dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/Text_Color"/>
+
+    <ImageButton
+        android:id="@+id/doneButton"
+        android:background="@color/Background_Color"
+        android:layout_width="60dp"
+        android:paddingTop="30dp"
+        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/pastTaskName"
+        android:paddingLeft="2dp"
+        android:gravity="center_vertical"
+        android:src="@drawable/done_color_level_0"/>
+
+
+</RelativeLayout>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Background_Color">
+
+    <TextView
+        android:id="@+id/pastTaskName"
+        android:paddingTop="20dp"
+        android:textSize="30sp"
+        android:layout_width="1000dp"
+        android:layout_height="85dp"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="3dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/Text_Color"/>
+
+    <TextView
+        android:id="@+id/pastTaskNotes"
+        android:textSize="12sp"
+        android:layout_width="1000dp"
+        android:layout_height="25dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="3dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/Text_Color"/>
+
+</RelativeLayout>

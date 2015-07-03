@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TabHost
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tabHost"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:layout_gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"></TabWidget>
+
+                <LinearLayout
+                    android:id="@+id/addNewTaskTab"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/newTaskNameText"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="30dp"
+                        android:focusable="true"
+                        android:hint="@string/nameHint" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:id="@+id/newTaskNotesText"
+                        android:layout_marginBottom="30dp"
+                        android:focusable="true"
+                        android:scrollbars="vertical"
+                        android:lines="8"
+                        android:minLines="8"
+                        android:hint="@string/notesHint"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_button_text"
+                        android:id="@+id/addNewTaskButton"
+                        android:layout_gravity="center" />
+
+                    </LinearLayout>
+
+        </LinearLayout>
+    </TabHost>
+
+</RelativeLayout>

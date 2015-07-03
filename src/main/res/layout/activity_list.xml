@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/listLayout"
+    tools:context=".ListActivity"
+    android:background="@color/Background_Color">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/Text_Color"
+        android:background="@color/Banner_Color"/>
+
+    <RelativeLayout
+        android:id="@+id/middleOfList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/Background_Color" >
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/taskListView"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/addTaskButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/add_button"/>
+
+</RelativeLayout>

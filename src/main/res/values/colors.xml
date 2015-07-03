@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- colors for adding in new themes later -->
+    <color name="Theme_Color_Level_0">#FF0000</color>
+    <color name="Theme_Color_Level_1">#FF3700</color>
+    <color name="Theme_Color_Level_2">#FF5500</color>
+    <color name="Theme_Color_Level_3">#FF6600</color>
+    <color name="Theme_Color_Level_4">#FF7700</color>
+    <color name="Theme_Color_Level_5">#FF9100</color>
+    <color name="Theme_Color_Level_6">#FFA600</color>
+    <color name="Theme_Color_Level_7">#FFBB00</color>
+    <color name="Theme_Color_Level_8">#FFC400</color>
+    <color name="Theme_Color_Level_9">#FFD900</color>
+    <color name="Theme_Color_Level_10">#FFE100</color>
+    <color name="Theme_Color_Level_11">#FFEA00</color>
+    <color name="Theme_Color_Level_12">#FFF700</color>
+    <color name="Theme_Color_Level_13">#F2FF00</color>
+    <color name="Theme_Color_Level_14">#D4FF00</color>
+    <color name="Theme_Color_Level_15">#CCFF00</color>
+    <color name="Theme_Color_Level_16">#BBFF00</color>
+    <color name="Theme_Color_Level_17">#A2FF00</color>
+    <color name="Theme_Color_Level_18">#8CFF00</color>
+    <color name="Theme_Color_Level_19">#7BFF00</color>
+    <color name="Theme_Color_Level_20">#62FF00</color>
+
+    <!-- colors for backgrounds and text -->
+    <color name="Background_Color">#FFFFFF</color>
+    <color name="Banner_Color">#FFFFFF</color>
+    <color name="Text_Color">#3D3D3D</color>
+
+</resources>
