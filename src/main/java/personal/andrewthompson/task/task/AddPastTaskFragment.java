@@ -5,8 +5,6 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +15,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import static personal.andrewthompson.task.task.Constants.ADD_TASK_FRAGMENT;
+import static personal.andrewthompson.task.task.Constants.DIVIDER_HEIGHT;
 import static personal.andrewthompson.task.task.Constants.LIST_COLOR;
 import static personal.andrewthompson.task.task.Constants.TASK_NAMES;
 import static personal.andrewthompson.task.task.Constants.TASK_NOTES;
 
 /**
- * Created by Andrew Thompson on 6/10/15.
+ * Created by Andy on 6/10/15.
+ *
+ * This class represents a fragment for adding a past task.
  */
 public class AddPastTaskFragment extends ListFragment {
     private OnFragmentCompleteListener completeListener;
@@ -31,17 +32,21 @@ public class AddPastTaskFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_layout, container, false);
-
-        return view;
+        return inflater.inflate(R.layout.list_layout, container, false);
     }
 
     @Override
+    /**
+     * Overrides onActivityCreated.
+     * Retrieves arrays of names and notes from the bundle, sets the listAdapter
+     * and sets the color of the list.
+     */
     public void onActivityCreated(Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
         pastList = new ArrayList<Task>();
 
+        // save the arrays of names and notes to fill the list with
         names = getArguments().getStringArray(TASK_NAMES);
         notes = getArguments().getStringArray(TASK_NOTES);
 
@@ -51,10 +56,15 @@ public class AddPastTaskFragment extends ListFragment {
         int color = getArguments().getInt(LIST_COLOR);
         ListView listView = (ListView) getView().findViewById(android.R.id.list);
         listView.setDivider(new ColorDrawable(color));
-        listView.setDividerHeight(1);
+        listView.setDividerHeight(DIVIDER_HEIGHT);
     }
 
     @Override
+    /**
+     * Overrides the onStart method.
+     * If there are tasks to add to the list it adds them, otherwise a textview
+     * is made visible saying there are no tasks to add.
+     */
     public void onStart() {
         super.onStart();
 
@@ -70,6 +80,10 @@ public class AddPastTaskFragment extends ListFragment {
         }
     }
 
+    /**
+     * This method allows the fragment to send information back to the TaskListActivity.
+     * @param activity The activity to send information to
+     */
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
@@ -81,6 +95,10 @@ public class AddPastTaskFragment extends ListFragment {
     }
 
     @Override
+    /**
+     * Overrides the onListItemClick method to send that list item's name, notes and position
+     * back to the TaskListActivity, then the fragment is removed.
+     */
     public void onListItemClick(ListView l, View v, int position, long id) {
         Task task = pastList.get(position);
         String name = task.getName();
@@ -95,11 +113,9 @@ public class AddPastTaskFragment extends ListFragment {
      * Custom inner class that subclasses ArrayAdapter for custom view of Tasks in the listView
      */
     private class TaskAdapter extends ArrayAdapter<Task> {
-        private ArrayList<Task> past;
 
         public TaskAdapter(Context context, ArrayList<Task> p) {
             super(context, 0, p);
-            past = p;
         }
 
         @Override

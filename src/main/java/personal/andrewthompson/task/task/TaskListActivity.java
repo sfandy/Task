@@ -14,10 +14,20 @@ import android.widget.TextView;
 
 import static personal.andrewthompson.task.task.Constants.ADD_TASK_BUTTON_OFFSET;
 import static personal.andrewthompson.task.task.Constants.ADD_TASK_FRAGMENT;
+import static personal.andrewthompson.task.task.Constants.LIST_COLOR;
+import static personal.andrewthompson.task.task.Constants.TASK_NAMES;
+import static personal.andrewthompson.task.task.Constants.TASK_NOTES;
 
+/**
+ * Created by Andy on 6/10/15.
+ *
+ * This class is the main activity of Task.
+ * It contains a taskList, has a header displaying your degree of success in completing tasks
+ * in the past 24 hours and week, has a button to add new tasks and allows for the user to
+ * mark tasks as completed.
+ */
 public class TaskListActivity extends ActionBarActivity implements OnFragmentCompleteListener {
     private TaskList taskList;
-    private TextView header;
     private FragmentManager fragManager;
     private boolean dragging = false;
     private final Handler dragHandler = new Handler();
@@ -28,15 +38,21 @@ public class TaskListActivity extends ActionBarActivity implements OnFragmentCom
     };
 
     @Override
+    /**
+     * Overriding the onCreate method.
+     * The task list is set up, the initial header is created and the add new
+     * task button is placed in an appropriate position on the screen (while
+     * also allowing the user to drag the button to a more convenient location
+     * to accomodate lefties, etc.).
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
         fragManager = getSupportFragmentManager();
-        header = (TextView) findViewById(R.id.header);
+        TextView header = (TextView) findViewById(R.id.header);
         ListView lview = (ListView) findViewById(R.id.taskListView);
         taskList = new TaskList(this, lview, header, fragManager);
-        taskList.updateHeader();
 
         // set position of add task button
         final ImageButton addButton = (ImageButton) findViewById(R.id.addTaskButton);
@@ -70,7 +86,14 @@ public class TaskListActivity extends ActionBarActivity implements OnFragmentCom
                     if (!dragging) {
                         dragHandler.removeCallbacks(addLongPressed);
                         addButton.setBackgroundResource(R.drawable.add_button);
-                        AddTaskTabFragment frag = AddTaskTabFragment.newInstance(taskList.getNamesArray(), taskList.getNotesArray(), taskList.getUIColor());
+
+                        // create a fragment for adding tasks (new or old)
+                        Bundle bdl = new Bundle(3);
+                        bdl.putStringArray(TASK_NAMES, taskList.getNamesArray());
+                        bdl.putStringArray(TASK_NOTES, taskList.getNotesArray());
+                        bdl.putInt(LIST_COLOR, taskList.getUIColor());
+                        AddTaskTabFragment frag = new AddTaskTabFragment();
+                        frag.setArguments(bdl);
                         frag.show(fragManager, ADD_TASK_FRAGMENT);
                     }
                     dragging = false;
@@ -105,6 +128,7 @@ public class TaskListActivity extends ActionBarActivity implements OnFragmentCom
      * This method receives data from an AddTaskTabFragment.
      */
     public void onNewTaskComplete(String name, String notes, int position) {
+        // tasks are only added if they contain a valid name
         if (name.length() > 0) {
             Task task = new Task(name, notes);
             taskList.addToListAndUpdate(task);

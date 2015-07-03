@@ -20,6 +20,7 @@ import java.util.Vector;
 
 import static personal.andrewthompson.task.task.Constants.COLOR_LEVEL;
 import static personal.andrewthompson.task.task.Constants.DAY_IN_HOURS;
+import static personal.andrewthompson.task.task.Constants.DIVIDER_HEIGHT;
 import static personal.andrewthompson.task.task.Constants.EDIT_TASK_FRAGMENT;
 import static personal.andrewthompson.task.task.Constants.PAST_TASK_LIFESPAN;
 import static personal.andrewthompson.task.task.Constants.TASK_LIST_MONITOR_INTERVAL;
@@ -29,15 +30,20 @@ import static personal.andrewthompson.task.task.Constants.TASK_NOTE;
 import static personal.andrewthompson.task.task.Constants.WEEK_IN_HOURS;
 
 /**
- * Created by Andrew Thompson on 6/8/15.
+ * Created by Andy on 6/8/15.
  *
+ * This class represents the list of tasks.
+ * It handles adding of new tasks, completion of tasks, saving of completed or expired
+ * tasks from the past week (so they can be quickly added back to the currentTasks),
+ * and monitoring of the current tasks so that they are only present for 24 hours from
+ * their date of creation.
  */
 public class TaskList {
     private final FragmentManager fragManager;
     private ListView listView;
     private Vector<Task> weeklyTasks, currentTasks, pastTasks;
     private ArrayAdapter<Task> taskAdapter;
-    private TextView footer;
+    private TextView header;
     private final Handler handler = new Handler();
     private final Runnable updateResults = new Runnable() {
         public void run() {
@@ -51,12 +57,14 @@ public class TaskList {
      * Constructor for a TaskList.
      * @param context the context this Task list is in
      */
-    public TaskList(Context context, ListView lView, TextView f, FragmentManager fm) {
+    public TaskList(Context context, ListView lView, TextView h, FragmentManager fm) {
         // set up current and past tasks
         currentTasks = new Vector<Task>();
         pastTasks = new Vector<Task>();
         weeklyTasks = new Vector<Task>();
-        addTestTaskData(10);
+
+        // un-comment this when testing to fill taskList with 10 tasks immediately
+//        addTestTaskData(10);
 
         fragManager = fm;
 
@@ -69,8 +77,9 @@ public class TaskList {
 
         colorDivider();
 
-        // set up footer
-        footer = f;
+        // set up header
+        header = h;
+        updateHeader();
 
         startTaskMonitoring();
     }
@@ -81,7 +90,7 @@ public class TaskList {
     public void colorDivider() {
         int color = getUIColor();
         listView.setDivider(new ColorDrawable(color));
-        listView.setDividerHeight(2);
+        listView.setDividerHeight(DIVIDER_HEIGHT);
     }
 
     /**
@@ -99,6 +108,7 @@ public class TaskList {
                         monitorTaskList(weeklyTasks, WEEK_IN_HOURS);
                         monitorTaskList(pastTasks, PAST_TASK_LIFESPAN);
 
+                        // update the header and UI color
                         handler.post(updateResults);
 
                         Thread.sleep(TASK_LIST_MONITOR_INTERVAL);
@@ -118,6 +128,7 @@ public class TaskList {
      * @param n the number of hours old any tasks in the list can be
      */
     private void monitorTaskList(Vector<Task> taskList, Long n) {
+        // make list of all tasks older than the specified age (n hours)
         Vector<Task> tasksToRemove = new Vector<Task>();
         for (Task task: taskList) {
             if (!task.isWithinPastNHours(n)) {
@@ -125,6 +136,7 @@ public class TaskList {
             }
         }
 
+        // remove old tasks from the taskList
         for (Task toRemove: tasksToRemove) {
             taskList.remove(toRemove);
         }
@@ -141,6 +153,10 @@ public class TaskList {
         colorDivider();
     }
 
+    /**
+     * Public method to allow activities containing a TaskList to call
+     * notifyDataSetChanged() on their taskList object.
+     */
     public void updateList() {
         taskAdapter.notifyDataSetChanged();
     }
@@ -174,23 +190,36 @@ public class TaskList {
     }
 
     /**
-     * This method updates the footer.
+     * This method updates the header.
      */
     public void updateHeader() {
         String result = "Today " + getDailyCompleted() + "/" + getDailyCount()
                 + "  |  Past week " + getWeeklyCompleted() + "/" + getWeeklyCount();
-        footer.setText(result);
+        header.setText(result);
     }
 
+    /**
+     * This method returns a double (corresponding to a color) that is representative
+     * of how many tasks the user has completed in the past day and week.
+     * @return returns a double corresponding to a color value
+     */
     public double getUIColorWeight() {
         return 15.0 * ((double) getDailyCompleted() / (double) getDailyCount())
                 + 5.0 * ((double) getWeeklyCompleted() / (double) getWeeklyCount());
     }
 
+    /**
+     * This method returns a color from the array of colors in Constants.java
+     * @return a color from the array of colors in Constants.java
+     */
     public int getUIColor() {
         return COLOR_LEVEL[(int) getUIColorWeight()];
     }
 
+    /**
+     * Private method that counts how many tasks have been completed in the past 24 hours.
+     * @return an integer count of completed tasks in the past 24 hours.
+     */
     private int getDailyCompleted() {
         int dailyComp = 0;
         for (Task t: weeklyTasks) {
@@ -201,6 +230,10 @@ public class TaskList {
         return dailyComp;
     }
 
+    /**
+     * Private method that counts how many tasks have been created in the past 24 hours.
+     * @return an integer count of created tasks in the past 24 hours.
+     */
     private int getDailyCount() {
         int dailyCount = 0;
         for (Task t: weeklyTasks) {
@@ -211,6 +244,10 @@ public class TaskList {
         return dailyCount;
     }
 
+    /**
+     * Private method that counts how many tasks have been completed in the past week.
+     * @return an integer count of completed tasks in the past week.
+     */
     private int getWeeklyCompleted() {
         int weeklyComp = 0;
         for (Task t: weeklyTasks) {
@@ -232,6 +269,13 @@ public class TaskList {
         private Vector<Task> daily, past;
         private float screenWidthDP, screenDensity, availableRoom;
 
+        /**
+         * Constructor for the TaskAdapter.
+         * Also saves information about screen dimensions
+         * @param c context
+         * @param d daily tasks
+         * @param p past tasks
+         */
         public TaskAdapter(Context c, Vector<Task> d, Vector<Task> p) {
             super(c, 0, d);
             daily = d;
@@ -241,6 +285,10 @@ public class TaskList {
             availableRoom = screenWidthDP - 60;
         }
 
+        /**
+         * Removes a task from the list of daily tasks.
+         * @param t the task to be removed
+         */
         public void removeFromDaily(Task t) {
             super.remove(t);
             daily.remove(t);
@@ -249,6 +297,11 @@ public class TaskList {
         }
 
         @Override
+        /**
+         * Overrides getView.
+         * Sets up the name and notes of a task, the button to complete each task
+         * and allows for editing of task name and notes
+         */
         public View getView(final int position, View convertView, ViewGroup parent) {
             View view = convertView;
             // Check if an existing view is being reused, otherwise inflate the view
@@ -290,6 +343,8 @@ public class TaskList {
                 }
             });
 
+            // allow each task to be clicked on to bring up a fragment to edit the task
+            // name and notes
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -310,16 +365,39 @@ public class TaskList {
             return view;
         }
 
+        /**
+         * This method converts pixels to dp.
+         * @param px the number of pixels to be converted
+         * @return returns a pixel value in dp
+         */
         private float pixelsToDP(float px) {
             return (px - .5f) / screenDensity;
         }
 
+        /**
+         * This method converts dp to pixels.
+         * @param dp the number of dp to be converted
+         * @return returns a dp value in pixels
+         */
         private float dpToPixels(float dp) {
             return (dp * screenDensity) + .5f;
         }
 
+        /**
+         * This method changes the done button of a task to the appropriate color
+         * and state (with or without a check mark).
+         * If pressed is true, the done button will be represented by a circle with
+         * a check mark inside. If false, the done button will be represented by
+         * an empty circle. Buttons are also set to the appropriate color, determined
+         * by a call to getUIColorWeight().
+         * @param button the button to be set
+         * @param pressed whether the button is currently pressed or not
+         */
         private void changeDoneButtonColor(ImageButton button, boolean pressed) {
+            // get the appropriate color of the button
             int color = (int) getUIColorWeight();
+
+            // set the button to the correct color and state
             switch(color) {
                 case 1:
                     if (pressed) {
@@ -472,6 +550,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Private method to add n Tasks to a tasklist.
+     * This method is used for testing purposes to artificially fill a task list
+     * for testing purposes.
+     * @param nTasks the number of fake tasks to create
+     */
     private void addTestTaskData(int nTasks) {
         for (int i = 0; i < nTasks; i++) {
             Task t = new Task("Fake task p" + i, "pnotes for task " + i);

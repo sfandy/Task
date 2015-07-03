@@ -16,6 +16,8 @@ import static personal.andrewthompson.task.task.Constants.TASK_NOTE;
 
 /**
  * Created by Andy on 6/11/15.
+ *
+ * This class represents a fragment used to edit a task's name or notes.
  */
 public class EditTaskFragment extends DialogFragment {
     private OnFragmentCompleteListener completeListener;
@@ -34,6 +36,7 @@ public class EditTaskFragment extends DialogFragment {
         EditText notesEditor = (EditText) view.findViewById(R.id.editTaskNotesTextbox);
         notesEditor.setText(getArguments().getString(TASK_NOTE));
 
+        // set up the done button to pass the new name and notes back to the TaskListActivity
         Button button = (Button) view.findViewById(R.id.submitNewTaskButton);
         button.setText("Done");
         button.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +56,10 @@ public class EditTaskFragment extends DialogFragment {
         return view;
     }
 
+    /**
+     * This method allows the fragment to send information back to the TaskListActivity.
+     * @param activity The activity to send information to
+     */
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {

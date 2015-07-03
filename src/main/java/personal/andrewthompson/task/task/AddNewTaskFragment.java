@@ -14,11 +14,18 @@ import static personal.andrewthompson.task.task.Constants.ADD_TASK_FRAGMENT;
 
 /**
  * Created by Andy on 6/10/15.
+ *
+ * This class represents a fragment in which a new task can be added.
+ * It collects the user's input for the task name and notes and sends
+ * those strings back to the TaskListActivity using the onAttach method.
  */
 public class AddNewTaskFragment extends DialogFragment {
     private OnFragmentCompleteListener completeListener;
 
     @Override
+    /**
+     * Overrides the onCreateView method to get string input for name and notes of task.
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.add_task_layout, container, false);
 
@@ -55,6 +62,7 @@ public class AddNewTaskFragment extends DialogFragment {
                 String notes = notesText.getText().toString();
                 completeListener.onNewTaskComplete(name, notes, -1);
 
+                // remove the fragment when the user clicks the addTask button
                 getActivity().getSupportFragmentManager().beginTransaction().remove(
                         getActivity().getSupportFragmentManager().findFragmentByTag(ADD_TASK_FRAGMENT)).commit();
             }
@@ -63,6 +71,10 @@ public class AddNewTaskFragment extends DialogFragment {
         return view;
     }
 
+    /**
+     * This method allows the fragment to send information back to the TaskListActivity.
+     * @param activity The activity to send information to
+     */
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {

@@ -3,7 +3,9 @@ package personal.andrewthompson.task.task;
 import android.graphics.Color;
 
 /**
- * Created by Andrew Thompson on 6/9/15.
+ * Created by Andy on 6/9/15.
+ *
+ * These represent the constants for Task.
  */
 public final class Constants {
     public static final String TASK_NAMES = "Task_Names_List";
@@ -22,34 +24,13 @@ public final class Constants {
 
     public static final int TASK_LIST_MONITOR_INTERVAL = 60000;
     public static final int ADD_TASK_BUTTON_OFFSET = 180;
+    public static final int DIVIDER_HEIGHT = 2;
 
     /*
      * Color constants for divider colors.
      * Index 0 corresponds to the lowest level of task completion (red).
      * Index 20 corresponds to the highest level of task completion (green).
      */
-    public static final int[] ALPHA_COLOR_LEVEL =
-            {Color.parseColor("#22FF0000"),
-             Color.parseColor("#22FF3700"),
-             Color.parseColor("#22FF5500"),
-             Color.parseColor("#22FF6600"),
-             Color.parseColor("#22FF7700"),
-             Color.parseColor("#22FF9100"),
-             Color.parseColor("#22FFA600"),
-             Color.parseColor("#22FFBB00"),
-             Color.parseColor("#22FFC400"),
-             Color.parseColor("#22FFD900"),
-             Color.parseColor("#22FFE100"),
-             Color.parseColor("#22FFEA00"),
-             Color.parseColor("#22FFF700"),
-             Color.parseColor("#22F2FF00"),
-             Color.parseColor("#22D4FF00"),
-             Color.parseColor("#22CCFF00"),
-             Color.parseColor("#22BBFF00"),
-             Color.parseColor("#22A2FF00"),
-             Color.parseColor("#228CFF00"),
-             Color.parseColor("#227BFF00"),
-             Color.parseColor("#2262FF00")};
     public static final int[] COLOR_LEVEL =
             {Color.parseColor("#FF0000"),
              Color.parseColor("#FF3700"),

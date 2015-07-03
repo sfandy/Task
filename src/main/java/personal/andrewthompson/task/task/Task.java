@@ -3,7 +3,15 @@ package personal.andrewthompson.task.task;
 import org.joda.time.DateTime;
 
 /**
- * Created by Andrew Thompson on 6/8/15.
+ * Created by Andy on 6/8/15.
+ *
+ * This class represents a task.
+ * It contains information such as the task's name, notes, whether it is
+ * completed or not and the time it was created. I chose to use a Joda
+ * DateTime as it is recommended over the Java 7 Calendar object (which was
+ * luckily replaced in Java 8, which unfortunately is not available when
+ * developing for Android). In addition, the Joda DateTime gives me more
+ * experience working with external libraries and working with Gradle.
  */
 public class Task {
     private String name, notes;
@@ -27,6 +35,10 @@ public class Task {
         return diff.compareTo(n) < 0;
     }
 
+    /**
+     * This method calculates this Task's age in milliseconds.
+     * @return this task's age in milliseconds
+     */
     private Long ageInMillis() {
         Long millisAdded = timeAdded.getMillis();
         Long millisCurr = System.currentTimeMillis();
@@ -43,10 +55,6 @@ public class Task {
 
     public boolean isCompleted() {
         return completed;
-    }
-
-    public DateTime getTimeAdded() {
-        return timeAdded;
     }
 
     public void setNotes(String no) {

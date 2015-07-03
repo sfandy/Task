@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,22 +18,15 @@ import static personal.andrewthompson.task.task.Constants.TASK_NAMES;
 import static personal.andrewthompson.task.task.Constants.TASK_NOTES;
 
 /**
- * Created by Andrew Thompson on 6/10/15.
+ * Created by Andy on 6/10/15.
+ *
+ * This class represents a fragment that holds two tabs, one for adding new tasks
+ * and one for adding completed and expired tasks.
  */
 public class AddTaskTabFragment extends DialogFragment {
     private FragmentTabHost tabHost;
     private ViewPager viewPager;
     private AddTaskAdapter adapter;
-
-    public static final AddTaskTabFragment newInstance(String[] names, String[] notes, int color) {
-        AddTaskTabFragment f = new AddTaskTabFragment();
-        Bundle bdl = new Bundle(3);
-        bdl.putStringArray(TASK_NAMES, names);
-        bdl.putStringArray(TASK_NOTES, notes);
-        bdl.putInt(LIST_COLOR, color);
-        f.setArguments(bdl);
-        return f;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,9 +42,9 @@ public class AddTaskTabFragment extends DialogFragment {
 
         adapter = new AddTaskAdapter(getChildFragmentManager(), getArguments());
 
+        // set up the view pager
         viewPager = (ViewPager) view.findViewById(R.id.pager);
         viewPager.setAdapter(adapter);
-
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i2) {
@@ -69,6 +61,7 @@ public class AddTaskTabFragment extends DialogFragment {
             }
         });
 
+        // set up the tabHost's changed state listener
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String s) {
@@ -80,6 +73,10 @@ public class AddTaskTabFragment extends DialogFragment {
         return view;
     }
 
+    /**
+     * This adapter extends FragmentPagerAdapter to create an adapter with two
+     * fragments, an AddNewTaskFragment and an AddPastTaskFragment.
+     */
     private class AddTaskAdapter extends FragmentPagerAdapter {
         private Bundle bundle;
         private final static int NEW_TASK_FRAGMENT_ID = 0, PAST_TASK_FRAGMENT_ID = 1;
@@ -90,6 +87,11 @@ public class AddTaskTabFragment extends DialogFragment {
         }
 
         @Override
+        /**
+         * Overrides getItem.
+         * This method determines which fragment to display, according to num
+         * which is a representation of which tab has been clicked on.
+         */
         public Fragment getItem(int num) {
             Fragment fragment = null;
             if (num == NEW_TASK_FRAGMENT_ID) {
