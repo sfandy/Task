@@ -38,19 +38,18 @@
                         android:layout_marginTop="30dp"
                         android:layout_marginBottom="30dp"
                         android:focusable="true"
-                        android:hint="@string/nameHint" />
+                        android:hint="@string/nameHint"
+                        android:inputType="textCapSentences"/>
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"
                         android:id="@+id/newTaskNotesText"
                         android:layout_marginBottom="30dp"
                         android:focusable="true"
                         android:scrollbars="vertical"
-                        android:lines="8"
-                        android:minLines="8"
-                        android:hint="@string/notesHint"/>
+                        android:hint="@string/notesHint"
+                        android:inputType="textCapSentences"/>
 
                     <Button
                         android:layout_width="wrap_content"

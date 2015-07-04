@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -38,6 +39,7 @@ public class AddNewTaskFragment extends DialogFragment {
                 return false;
             }
         });
+        nameText.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         // override Android bug where EditTexts in TabHosts lose focus when clicked
         final EditText notesText = (EditText) view.findViewById(R.id.newTaskNotesText);
@@ -48,6 +50,7 @@ public class AddNewTaskFragment extends DialogFragment {
                 return false;
             }
         });
+        notesText.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         // add submit button
         Button addTaskButton = (Button) view.findViewById(R.id.addNewTaskButton);

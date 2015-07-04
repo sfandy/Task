@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -31,10 +32,13 @@ public class EditTaskFragment extends DialogFragment {
         // set text of name editor
         EditText nameEditor = (EditText) view.findViewById(R.id.editTaskNameTextbox);
         nameEditor.setText(getArguments().getString(TASK_NAME));
+        nameEditor.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
 
         // set text of notes editor
         EditText notesEditor = (EditText) view.findViewById(R.id.editTaskNotesTextbox);
         notesEditor.setText(getArguments().getString(TASK_NOTE));
+        notesEditor.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         // set up the done button to pass the new name and notes back to the TaskListActivity
         Button button = (Button) view.findViewById(R.id.submitNewTaskButton);
