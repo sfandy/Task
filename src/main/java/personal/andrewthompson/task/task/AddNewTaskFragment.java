@@ -38,7 +38,6 @@ public class AddNewTaskFragment extends DialogFragment {
                 return false;
             }
         });
-        nameText.requestFocus();
 
         // override Android bug where EditTexts in TabHosts lose focus when clicked
         final EditText notesText = (EditText) view.findViewById(R.id.newTaskNotesText);

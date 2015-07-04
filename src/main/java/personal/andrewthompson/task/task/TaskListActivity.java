@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import static personal.andrewthompson.task.task.Constants.ADD_TASK_BUTTON_OFFSET;
 import static personal.andrewthompson.task.task.Constants.ADD_TASK_FRAGMENT;
 import static personal.andrewthompson.task.task.Constants.LIST_COLOR;
 import static personal.andrewthompson.task.task.Constants.TASK_NAMES;
@@ -58,8 +57,8 @@ public class TaskListActivity extends ActionBarActivity implements OnFragmentCom
         final ImageButton addButton = (ImageButton) findViewById(R.id.addTaskButton);
         final int screenWidth = getResources().getDisplayMetrics().widthPixels;
         final int screenHeight = getResources().getDisplayMetrics().heightPixels;
-        addButton.setX(screenWidth - ADD_TASK_BUTTON_OFFSET);
-        addButton.setY(screenHeight - ADD_TASK_BUTTON_OFFSET);
+        addButton.setX(screenWidth - (screenWidth / 3));
+        addButton.setY(screenHeight - (screenHeight / 4));
 
         // set up dragging and clicking of add button
         addButton.setOnTouchListener(new View.OnTouchListener() {

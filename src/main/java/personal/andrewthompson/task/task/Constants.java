@@ -17,13 +17,11 @@ public final class Constants {
     public static final String TASK_LIST_POSITION = "Task_List_Position";
     public static final String LIST_COLOR = "List_Color";
 
-    public static final Long TEST_SINGLE_HOUR = 1L;
     public static final Long DAY_IN_HOURS = 24L;
     public static final Long WEEK_IN_HOURS = 168L;
     public static final Long PAST_TASK_LIFESPAN = 504L;
 
     public static final int TASK_LIST_MONITOR_INTERVAL = 60000;
-    public static final int ADD_TASK_BUTTON_OFFSET = 180;
     public static final int DIVIDER_HEIGHT = 2;
 
     /*
