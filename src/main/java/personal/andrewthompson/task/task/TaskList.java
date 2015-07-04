@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -59,9 +58,9 @@ public class TaskList {
      */
     public TaskList(Context context, ListView lView, TextView h, FragmentManager fm) {
         // set up current and past tasks
-        currentTasks = new Vector<Task>();
-        pastTasks = new Vector<Task>();
-        weeklyTasks = new Vector<Task>();
+        currentTasks = new Vector<>();
+        pastTasks = new Vector<>();
+        weeklyTasks = new Vector<>();
 
         // un-comment this when testing to fill taskList with 10 tasks immediately
 //        addTestTaskData(10);
@@ -112,9 +111,7 @@ public class TaskList {
                         handler.post(updateResults);
 
                         Thread.sleep(TASK_LIST_MONITOR_INTERVAL);
-                    } catch (InterruptedException e) {
-                        Log.v("Task", "interruptedException caught");
-                    }
+                    } catch (InterruptedException e) {}
 
                 }
             }
@@ -129,7 +126,7 @@ public class TaskList {
      */
     private void monitorTaskList(Vector<Task> taskList, Long n) {
         // make list of all tasks older than the specified age (n hours)
-        Vector<Task> tasksToRemove = new Vector<Task>();
+        Vector<Task> tasksToRemove = new Vector<>();
         for (Task task: taskList) {
             if (!task.isWithinPastNHours(n)) {
                 tasksToRemove.add(task);
