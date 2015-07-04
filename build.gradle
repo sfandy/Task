@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'MyAndroidKey'
+            keyPassword 'pujwsbtrue'
+            storeFile file('/Users/OldAndy/Documents/Career/Keystores/android.jks')
+            storePassword 'pujwsbtrue'
+        }
+    }
     compileSdkVersion 16
     buildToolsVersion "20.0.0"
-
     defaultConfig {
         applicationId "personal.andrewthompson.task.task"
         minSdkVersion 11
@@ -15,6 +22,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }
@@ -26,5 +34,6 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:19.+'
-    compile 'joda-time:joda-time:2.7' // for joda
+    compile 'joda-time:joda-time:2.7'
+    // for joda
 }
