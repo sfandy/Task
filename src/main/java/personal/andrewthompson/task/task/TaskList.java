@@ -58,9 +58,9 @@ public class TaskList {
      */
     public TaskList(Context context, ListView lView, TextView h, FragmentManager fm) {
         // set up current and past tasks
-        currentTasks = new Vector<>();
-        pastTasks = new Vector<>();
-        weeklyTasks = new Vector<>();
+        currentTasks = new Vector<Task>();
+        pastTasks = new Vector<Task>();
+        weeklyTasks = new Vector<Task>();
 
         // un-comment this when testing to fill taskList with 10 tasks immediately
 //        addTestTaskData(10);
@@ -126,7 +126,7 @@ public class TaskList {
      */
     private void monitorTaskList(Vector<Task> taskList, Long n) {
         // make list of all tasks older than the specified age (n hours)
-        Vector<Task> tasksToRemove = new Vector<>();
+        Vector<Task> tasksToRemove = new Vector<Task>();
         for (Task task: taskList) {
             if (!task.isWithinPastNHours(n)) {
                 tasksToRemove.add(task);
